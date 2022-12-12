@@ -1,6 +1,7 @@
 import axios from 'axios';
+import UserInfo from '../type/LolTypes';
 
-const backendUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+const backendUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
 
 class Api {
   private instance: any;
@@ -15,16 +16,10 @@ class Api {
     });
   }
 
-  register = (data: string) =>
+  getLeaderboard = () =>
     this.instance
-      .post('/register', data)
-      .then((res: { data: any }) => res.data);
-
-  profile = () =>
-    this.instance.get('/user').then((res: { data: any }) => res.data);
-
-  putProfile = (data: string) =>
-    this.instance.put('/user', data).then((res: { data: any }) => res.data);
+      .get('/lol/leaderboard')
+      .then((res: { data: UserInfo[] }) => res.data);
 }
 
 export default new Api();
